@@ -1,10 +1,13 @@
-# Model 1 - Create a Blockchain
+# Module 2 - Create a cryptocurrency
 
 # Importing the libraries
 import datetime
 import hashlib
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+import requests
+from uuid import uuid4
+from urllib.parse import urlparse
 
 
 # Part 1 - Building a Blockchain
@@ -13,6 +16,7 @@ class Blockchain:
         self.chain = []
         self.transactions = []
         self.create_block(proof=1, previous_hash="0")
+        self.nodes = set()
 
     def create_block(self, proof, previous_hash):
         block = {
@@ -71,10 +75,15 @@ class Blockchain:
         previous_block = self.get_previous_block()
         return previous_block["index"] + 1
 
+    def add_node(self, address):
+        parsed_url = urlparse(address)
+        self.nodes.add(parsed_url.netloc)
+
 
 # Part 2 - Mining our Blockchain
 # Creating a Web App
 app = Flask(__name__)
+
 
 # Creating a Blockchain
 blockchain = Blockchain()
