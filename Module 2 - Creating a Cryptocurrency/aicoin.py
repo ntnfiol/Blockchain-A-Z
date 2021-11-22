@@ -84,10 +84,10 @@ class Blockchain:
         longest_chain = None
         max_length = len(self.chain)
         for node in network:
-            response = requests.get(f'http://{node}/get_chain')
+            response = requests.get(f"http://{node}/get_chain")
             if response.status_code == 200:
-                length = response.json()['length']
-                chain = response.json()['chain']
+                length = response.json()["length"]
+                chain = response.json()["chain"]
                 if length > max_length and self.is_chain_valid(chain):
                     max_length = length
                     longest_chain = chain
@@ -101,6 +101,8 @@ class Blockchain:
 # Creating a Web App
 app = Flask(__name__)
 
+# Creating an address for the node on Port 5000
+node_address = str(uuid4()).replace("-", "")
 
 # Creating a Blockchain
 blockchain = Blockchain()
@@ -113,13 +115,15 @@ def mine_block():
     previous_proof = previous_block["proof"]
     proof = blockchain.proof_of_work(previous_proof)
     previous_hash = blockchain.hash(previous_block)
+    blockchain.add_transaction(sender=node_address, receiver="Devin", amount=1)
     block = blockchain.create_block(proof, previous_hash)
     response = {
         "message": "Congratulations, you just mined a block!",
         "index": block["index"],
         "timestamp": block["timestamp"],
         "proof": block["proof"],
-        "previous_hash": block["previous_hash"]
+        "previous_hash": block["previous_hash"],
+        "transactions": block["transactions"]
     }
     return jsonify(response), 200
 
@@ -147,6 +151,9 @@ def is_valid():
             "message": "Houston, we have a problem. The Blockchain is not valid."
         }
     return jsonify(response), 200
+
+
+# Part 3 - Decentralizing our Blockchain
 
 
 # Running the app
