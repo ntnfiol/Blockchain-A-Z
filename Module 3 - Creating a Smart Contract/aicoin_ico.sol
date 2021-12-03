@@ -16,4 +16,10 @@ contract AICoinICO {
     // Mapping from the investor address to its equity in AICoins and USD
     mapping(address => uint) equity_aicoins;
     mapping(address => uint) equity_usd;
+
+    // Checking if the investor can buy AICoins
+    modifier can_buy_aicoins(uint usd_invested) {
+        require(usd_invested * usd_to_aicoins + total_aicoins_bougth <= max_aicoins);
+        _;
+    }
 }
