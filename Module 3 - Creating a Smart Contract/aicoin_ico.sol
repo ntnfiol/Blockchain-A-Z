@@ -12,4 +12,8 @@ contract AICoinICO {
 
     // Inroducing the total number of AICoins that have been bought by the investors
     uint public total_aicoins_bougth = 0;
+
+    // Mapping from the investor address to its equity in AICoins and USD
+    mapping(address => uint) equity_aicoins;
+    mapping(address => uint) equity_usd;
 }
