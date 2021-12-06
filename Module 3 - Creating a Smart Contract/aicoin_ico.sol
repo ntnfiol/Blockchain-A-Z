@@ -24,12 +24,21 @@ contract AICoinICO {
     }
 
     // Getting the equity in AICoins of an investor
-    function equity_in_aicoins(address investor) external constant returns (uint) {
+    function equity_in_aicoins(address investor) external view returns (uint) {
         return equity_aicoins[investor];
     }
 
     // Getting the equity in USD of an investor
-    function equity_in_usd(address investor) external constant returns (uint) {
+    function equity_in_usd(address investor) external view returns (uint) {
         return equity_usd[investor];
+    }
+
+    // Buying AICoins
+    function buy_aicoins(address investor, uint usd_invested) external 
+    can_buy_aicoins(usd_invested) {
+        uint aicoins_bougth = usd_invested * usd_to_aicoins;
+        equity_aicoins[investor] += aicoins_bougth;
+        equity_usd[investor] = equity_aicoins[investor] / 10000;
+        total_aicoins_bougth += aicoins_bougth;
     }
 }
