@@ -28,4 +28,8 @@ contract AICoinICO {
         return equity_aicoins[investor];
     }
 
+    // Getting the equity in USD of an investor
+    function equity_in_usd(address investor) external constant returns (uint) {
+        return equity_usd[investor];
+    }
 }
