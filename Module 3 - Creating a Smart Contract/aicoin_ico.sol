@@ -41,4 +41,11 @@ contract AICoinICO {
         equity_usd[investor] = equity_aicoins[investor] / 10000;
         total_aicoins_bougth += aicoins_bougth;
     }
+
+    // Selling AICoins
+    function sell_aicoins(address investor, uint aicoins_sold) external {
+        equity_aicoins[investor] -= aicoins_sold;
+        equity_usd[investor] = equity_aicoins[investor] / 10000;
+        total_aicoins_bougth -= aicoins_sold;
+    }
 }
