@@ -22,4 +22,10 @@ contract AICoinICO {
         require(usd_invested * usd_to_aicoins + total_aicoins_bougth <= max_aicoins);
         _;
     }
+
+    // Getting the equity in AICoins of an investor
+    function equity_in_aicoins(address investor) external constant returns (uint) {
+        return equity_aicoins[investor];
+    }
+
 }
